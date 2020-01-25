@@ -1,0 +1,2 @@
+model_checkpoint_path: "C:/tensorflow_work/checkpts"
+all_model_checkpoint_paths: "C:/tensorflow_work/checkpts"
