@@ -1,4 +1,3 @@
-
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -12,6 +11,7 @@ import random
 import re
 import sys
 
+
 import numpy as np
 import tensorflow as tf
 import tensorflow_hub as hub
@@ -24,7 +24,7 @@ CHECKPOINT_NAME = 'C:/tensorflow_work/checkpts'
 
 FAKE_QUANT_OPS = ('FakeQuantWithMinMaxVars',
                   'FakeQuantWithMinMaxVarsPerChannel')
-
+  
 
 def create_image_lists(image_dir, testing_percentage, validation_percentage):
 

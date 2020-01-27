@@ -1,5 +1,27 @@
 python retrain.py --image_dir=C:\Dataset\Firepics --output_graph=retrained_graph.pb --output_labels=retrained_labels.txt --bottleneck_dir=bottlenecks --learning_rate=0.0005 --testing_percentage=10 --validation_percentage=10 --train_batch_size=32 --validation_batch_size=-1 --flip_left_right True --random_scale=30 --random_brightness=30 --eval_step_interval=100 --how_many_training_steps=4000 --tfhub_module https://tfhub.dev/google/imagenet/mobilenet_v1_075_224/quantops/feature_vector/1
 
-python freeze_graph.py — input_graph=retrained_graph.pb — input_checkpoint=mobilenet_v1_0.5_224.ckpt.data-00000-of-00001 — input_binary=true — output_graph=/tmp/frozen_retrained_graph.pb — output_node_names=MobileNetV1/Predictions/Reshape_1
+freeze_graph
+--input_graph=retrained_graph.pb 
+--input_checkpoint=mobilenet_v1_0.5_224.ckpt.data-00000-of-00001
+--input_binary=true
+--output_graph=/tmp/frozen_retrained_graph.pb 
+--output_node_names=MobileNetV1/Predictions/Reshape_1
 
 tflite_convert — output_file=retrainedlite.tflite — graph_def_file=retrained_graph.pb — inference_type=QUANTIZED_UINT8 — input_arrays=input — output_arrays=MobilenetV1/Predictions/Reshape_1 \ — mean_values=224 — std_dev_values=127
+
+
+python -m tf2onnx.convert 
+    [--input retrained_graph.pb ]
+    [--graphdef etrained_graph.pb]
+    [--checkpoint mobilenet_v1_0.5_224.ckpt.data-00000-of-00001]
+    [--saved-model SOURCE_SAVED_MODEL]
+    [--output TARGET_ONNX_MODEL]
+    [--inputs GRAPH_INPUTS]
+    [--outputs GRAPH_OUTPUS]
+    [--inputs-as-nchw inputs_provided_as_nchw]
+    [--opset OPSET]
+    [--target TARGET]
+    [--custom-ops list-of-custom-ops]
+    [--fold_const]
+    [--continue_on_error]
+    [--verbose]
